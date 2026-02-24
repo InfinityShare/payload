@@ -197,6 +197,11 @@ export const getRouteData = ({
             templateType = 'default'
             viewType = 'folders'
           }
+        } else {
+          // Custom view matched by route only (e.g. /lexware-import): use default template
+          // so the full admin layout including sidebar is shown
+          templateClassName = customView.viewKey || 'custom-view'
+          templateType = 'default'
         }
       } else if (oneSegmentViews[viewKey]) {
         // --> /account

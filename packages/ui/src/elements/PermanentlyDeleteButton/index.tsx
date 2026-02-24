@@ -116,8 +116,12 @@ export const PermanentlyDeleteButton: React.FC<Props> = (props) => {
         return
       }
 
-      if (json.errors) {
-        json.errors.forEach((error) => toast.error(error.message))
+      if (Array.isArray(json.errors) && json.errors.length > 0) {
+        json.errors
+          .filter(Boolean)
+          .forEach((error) =>
+            toast.error(error?.message ?? (error != null ? String(error) : t('error:unknown'))),
+          )
       } else {
         addDefaultError()
       }

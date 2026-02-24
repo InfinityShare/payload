@@ -127,7 +127,10 @@ export function ListEmptyTrashButton({
 
       if (json?.errors?.length > 0) {
         toast.error(json.message, {
-          description: json.errors.map((err) => err.message).join('\n'),
+          description: (Array.isArray(json.errors) ? json.errors : [])
+            .map((err) => err?.message ?? (err != null ? String(err) : ''))
+            .filter(Boolean)
+            .join('\n'),
         })
       }
 

@@ -1,0 +1,86 @@
+---
+description: FarmersStuff brand design governance – colors, typography, layout, components
+globs: src/**/*.tsx, src/**/*.css, src/**/index.css, src/theme/**/*
+alwaysApply: false
+---
+
+# FarmersStuff Design Governance
+
+You are the design governance engine for the FarmersStuff website. Enforce brand consistency, color discipline, and layout clarity across all components.
+
+## Brand Positioning
+
+FarmersStuff is a **compact tractor and equipment dealer**. Tone: **Tough, direct, industrial.** Not aggressive. Not chaotic. Not dirty. Confidence through structure and contrast.
+
+## 1. Clean Industrial (not muddy)
+
+- Backgrounds must be **structured and controlled**.
+- **No** earth textures, soil overlays, heavy grunge.
+- Use subtle concrete, brushed steel, or dark matte surfaces.
+- Texture opacity **maximum 8%**.
+
+## 2. Color System (strict)
+
+**Tokens:** Use `src/theme/brand.ts` and CSS variables from `globals.css`. No hardcoded hex except in the theme file.
+
+| Role | Hex | Usage |
+|------|-----|--------|
+| **Signal Orange** | `#FF5A00` | CTA, highlights, hover, icons **only** |
+| **Deep Anthracite** | `#1A1A1A` | Main background |
+| **Graphite** | `#242424` | Cards, surfaces |
+| **Industrial Gray** | `#2E2E2E` | Alternate surfaces |
+| **White** | `#FFFFFF` | Primary text, text on orange |
+| **Border** | `#3A3A3A` | Subtle borders |
+
+**Rules:**
+
+- **Never** use orange as large background fill blocks.
+- Backgrounds must stay **dark-neutral**.
+- No gradients unless **subtle dark** within the same tone range.
+- In components: use `bg-primary` for CTAs only; use `bg-background`, `bg-card`, `border-border` for layout.
+
+## 3. Typography
+
+- **Headlines:** Condensed industrial sans; uppercase allowed for CTA and section titles; strong weight; no decorative effects.
+- **Body:** Neutral grotesk (Inter / IBM Plex / Geist); clean, readable, functional.
+- **No:** drop shadows on text, glows, distressed fonts, rough typography effects.
+
+## 4. Layout
+
+- Clear **12-column grid** on desktop.
+- Generous spacing; strong alignment.
+- **No** chaotic overlapping, skewed sections, or dynamic angle shapes.
+
+## 5. Visual Tone
+
+**Toughness from:** strong contrast, bold typography, high-quality machinery photography, controlled lighting.
+
+**Not from:** dirt overlays, grunge splashes, scratch effects, noise filters.
+
+## 6. Image Treatment
+
+- Dark, dramatic lighting.
+- Industrial environment (warehouse, workshop, forest edge).
+- Clean ground, not muddy foreground.
+- Subtle vignette allowed.
+- No fake HDR.
+
+## 7. Component Rules
+
+- **Buttons:** Orange background (`bg-primary`), white text (`text-primary-foreground`), very subtle elevation, sharp or max 4px radius (`rounded` / `rounded-[4px]`).
+- **Cards:** Dark gray background (`bg-card`), 1px subtle border (`border border-border`), hover = orange border (`hover:border-primary`).
+- **Navigation:** Dark background, white text, orange underline on hover (see Header `index.css`).
+
+## 8. Brand Feel
+
+**Use:** Controlled, industrial, professional, reliable, dealer-grade, serious, heavy-duty.
+
+**Avoid:** Startup aesthetic, tech SaaS look, agricultural green branding, DIY hobby vibe, excessive texture.
+
+## Implementation
+
+- **Design tokens:** `src/theme/brand.ts` is the single source of truth; `globals.css` maps them to CSS variables; `cssVariables.js` uses the theme for JS (e.g. Stripe).
+- **Radius:** `4px` (var `--radius`).
+- **Shadow:** Very subtle only, e.g. `0 2px 8px rgba(0,0,0,0.35)`.
+
+When adding or changing UI: use semantic tokens (`primary`, `background`, `card`, `border`, `muted-foreground`) and follow the rules above.

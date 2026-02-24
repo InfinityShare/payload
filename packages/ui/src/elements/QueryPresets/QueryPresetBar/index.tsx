@@ -133,8 +133,13 @@ export const QueryPresetBar: React.FC<{
 
             await resetQueryPreset()
           } else {
-            if (json.errors) {
-              json.errors.forEach((error) => toast.error(error.message))
+            if (Array.isArray(json.errors) && json.errors.length > 0) {
+              const fallbackMsg = t('error:deletingTitle', { title: activePreset.title })
+              json.errors
+                .filter(Boolean)
+                .forEach((error) =>
+                  toast.error(error?.message ?? (error != null ? String(error) : fallbackMsg)),
+                )
             } else {
               toast.error(t('error:deletingTitle', { title: activePreset.title }))
             }
@@ -180,8 +185,14 @@ export const QueryPresetBar: React.FC<{
 
             setQueryModified(false)
           } else {
-            if (json.errors) {
-              json.errors.forEach((error) => toast.error(error.message))
+            if (Array.isArray(json.errors) && json.errors.length > 0) {
+              json.errors
+                .filter(Boolean)
+                .forEach((error) =>
+                  toast.error(
+                    error?.message ?? (error != null ? String(error) : t('error:unknown')),
+                  ),
+                )
             } else {
               toast.error(t('error:unknown'))
             }

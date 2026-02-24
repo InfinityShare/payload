@@ -134,9 +134,12 @@ export function PublishManyDrawerContent(props: PublishManyDrawerContentProps) {
               }),
             )
 
-            if (json?.errors.length > 0) {
+            if (json?.errors?.length > 0) {
               toast.error(json.message, {
-                description: json.errors.map((error) => error.message).join('\n'),
+                description: (Array.isArray(json.errors) ? json.errors : [])
+                  .map((error) => error?.message ?? (error != null ? String(error) : ''))
+                  .filter(Boolean)
+                  .join('\n'),
               })
             }
 
@@ -159,8 +162,12 @@ export function PublishManyDrawerContent(props: PublishManyDrawerContentProps) {
             return null
           }
 
-          if (json.errors) {
-            json.errors.forEach((error) => toast.error(error.message))
+          if (Array.isArray(json.errors) && json.errors.length > 0) {
+            json.errors
+              .filter(Boolean)
+              .forEach((error) =>
+                toast.error(error?.message ?? (error != null ? String(error) : t('error:unknown'))),
+              )
           } else {
             addDefaultError()
           }

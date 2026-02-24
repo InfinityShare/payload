@@ -137,7 +137,10 @@ export const RestoreMany: React.FC<Props> = (props) => {
 
       if (json?.errors?.length > 0) {
         toast.error(json.message, {
-          description: json.errors.map((e) => e.message).join('\n'),
+          description: (Array.isArray(json.errors) ? json.errors : [])
+            .map((e) => e?.message ?? (e != null ? String(e) : ''))
+            .filter(Boolean)
+            .join('\n'),
         })
       }
     } catch (err) {

@@ -1,0 +1,22 @@
+'use client'
+
+import React from 'react'
+
+export default function Error({ reset }: { reset: () => void }) {
+  return (
+    <div className="mx-auto my-4 flex max-w-xl flex-col rounded-lg border border-border bg-card p-8 md:p-12">
+      <h2 className="text-xl font-bold">Oh no!</h2>
+      <p className="my-2">
+        There was an issue with our storefront. This could be a temporary issue, please try your
+        action again.
+      </p>
+      <button
+        className="mx-auto mt-4 flex w-full items-center justify-center rounded-md bg-primary p-4 tracking-wide text-primary-foreground hover:bg-primary/90"
+        onClick={() => reset()}
+        type="button"
+      >
+        Try Again
+      </button>
+    </div>
+  )
+}

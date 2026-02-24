@@ -293,9 +293,12 @@ export function DeleteMany_v4({
             )
           }
 
-          if (json?.errors.length > 0) {
+          if (json?.errors?.length > 0) {
             toast.error(json.message, {
-              description: json.errors.map((error) => error.message).join('\n'),
+              description: (Array.isArray(json.errors) ? json.errors : [])
+                .map((error) => error?.message ?? (error != null ? String(error) : ''))
+                .filter(Boolean)
+                .join('\n'),
             })
           }
 

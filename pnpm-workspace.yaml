@@ -5,6 +5,7 @@ packages:
   - 'templates/blank'
   - 'templates/website'
   - 'templates/ecommerce'
+  - 'templates/farmersstuff'
 
 updateNotifier: false
 symlink: true
