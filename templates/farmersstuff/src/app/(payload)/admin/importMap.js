@@ -1,3 +1,4 @@
+import { ComposeField as ComposeField_c25bd927cd468b8e16d7bdb2cc282659 } from '@ai-stack/payloadcms/fields'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -30,16 +31,20 @@ import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f
 import { KleinanzeigenGeneratorField as KleinanzeigenGeneratorField_d82734d026fcf3d07e4b1d24b2f71934 } from '@/components/admin/KleinanzeigenGeneratorField'
 import { SpecImportField as SpecImportField_cb3355ea632f7516004b65d6bba62f04 } from '@/components/admin/SpecImportField'
 import { LexwareSyncListMenuItem as LexwareSyncListMenuItem_db66fd04139c9bc7cc24d95c46cc711d } from 'payload-lexwareapi/client'
+import { SelectField as SelectField_c25bd927cd468b8e16d7bdb2cc282659 } from '@ai-stack/payloadcms/fields'
+import { PromptEditorField as PromptEditorField_c25bd927cd468b8e16d7bdb2cc282659 } from '@ai-stack/payloadcms/fields'
 import { BeforeDashboard as BeforeDashboard_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { BeforeDashboardClient as BeforeDashboardClient_db66fd04139c9bc7cc24d95c46cc711d } from 'payload-lexwareapi/client'
 import { BeforeDashboardServer as BeforeDashboardServer_46e244f084c20dfd75228578052a4504 } from 'payload-lexwareapi/rsc'
 import { BeforeDashboardClient as BeforeDashboardClient_d2bf3b748dc85273fbc25fa7893015f8 } from 'payload-bulkimageimport/client'
 import { BeforeDashboardServer as BeforeDashboardServer_5ca772337845d5f72bee8d3d27db0e58 } from 'payload-bulkimageimport/rsc'
 import { BeforeLogin as BeforeLogin_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
+import { InstructionsProvider as InstructionsProvider_4490b89d4413c1ffaecdacfe72efaf73 } from '@ai-stack/payloadcms/client'
 import { default as default_fa1050f2c8c1f299e4b59091c472a2b7 } from '@/components/admin/ClassifiedsOverview'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 export const importMap = {
+  '@ai-stack/payloadcms/fields#ComposeField': ComposeField_c25bd927cd468b8e16d7bdb2cc282659,
   '@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell':
     RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   '@payloadcms/richtext-lexical/rsc#RscEntryLexicalField':
@@ -101,6 +106,9 @@ export const importMap = {
     SpecImportField_cb3355ea632f7516004b65d6bba62f04,
   'payload-lexwareapi/client#LexwareSyncListMenuItem':
     LexwareSyncListMenuItem_db66fd04139c9bc7cc24d95c46cc711d,
+  '@ai-stack/payloadcms/fields#SelectField': SelectField_c25bd927cd468b8e16d7bdb2cc282659,
+  '@ai-stack/payloadcms/fields#PromptEditorField':
+    PromptEditorField_c25bd927cd468b8e16d7bdb2cc282659,
   '@/components/BeforeDashboard#BeforeDashboard': BeforeDashboard_1a7510af427896d367a49dbf838d2de6,
   'payload-lexwareapi/client#BeforeDashboardClient':
     BeforeDashboardClient_db66fd04139c9bc7cc24d95c46cc711d,
@@ -111,6 +119,8 @@ export const importMap = {
   'payload-bulkimageimport/rsc#BeforeDashboardServer':
     BeforeDashboardServer_5ca772337845d5f72bee8d3d27db0e58,
   '@/components/BeforeLogin#BeforeLogin': BeforeLogin_8a7ab0eb7ab5c511aba12e68480bfe5e,
+  '@ai-stack/payloadcms/client#InstructionsProvider':
+    InstructionsProvider_4490b89d4413c1ffaecdacfe72efaf73,
   '@/components/admin/ClassifiedsOverview#default': default_fa1050f2c8c1f299e4b59091c472a2b7,
   '@payloadcms/next/rsc#CollectionCards': CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
 }

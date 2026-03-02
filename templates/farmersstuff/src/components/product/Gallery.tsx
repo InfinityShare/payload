@@ -1,6 +1,6 @@
 'use client'
 
-import type { Media as MediaType, Product } from '@/payload-types'
+import type { Product } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import { GridTileImage } from '@/components/Grid/tile'
@@ -50,7 +50,7 @@ export const Gallery: React.FC<Props> = ({ gallery }) => {
   return (
     <div className="bg-[#f5f5f5] p-3 border border-border">
       {/* Main image: 4:3 ratio, object-cover fills frame, 1px border */}
-      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border border-border bg-[#f5f5f5] mb-3">
+      <div className="relative w-full aspect-video overflow-hidden rounded-lg border border-border bg-[#f5f5f5] mb-3">
         <Media
           resource={gallery[current].image}
           className="absolute inset-0 w-full h-full"
@@ -65,7 +65,7 @@ export const Gallery: React.FC<Props> = ({ gallery }) => {
 
             return (
               <CarouselItem
-                className="basis-1/3 cursor-pointer"
+                className="grid-cols-2 cursor-pointer"
                 key={`${item.image.id}-${i}`}
                 onClick={() => setCurrent(i)}
               >

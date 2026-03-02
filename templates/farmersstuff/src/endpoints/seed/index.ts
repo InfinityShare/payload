@@ -27,7 +27,49 @@ const collections: CollectionSlug[] = [
   'orders',
 ]
 
-const categories = ['Accessories', 'T-Shirts', 'Hats']
+const categories = [
+  'Traktoren',
+  'Frontlader',
+  'Reifen',
+  'Farmers Stuff',
+  'Frontladeranbauten',
+  'Ersatzteile & Zubehör',
+  'Bagger',
+  'Bagger Zubehör',
+  'Mulcher',
+  'Fräsen',
+  'Verschleißteile',
+  'Spalter / Sägen',
+  'Heckcontainer',
+  'Anbaugeräte Sonstiges',
+  'Walzen',
+  'Wiesenschleppe',
+  'Traktorbedarf, Oberlenker etc',
+  'Häcksler',
+  'Reitplatzplaner',
+  'Anhänger',
+  'Kompaktlader',
+  'Kompaktlader Zubehör',
+  'Gebrauchte Maschinen',
+  'Dumper E-Schubkarren',
+  'Hoflader',
+  'Hoflader Zubehör',
+]
+
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    .replace(/&/g, 'und')
+    .replace(/\s*\/\s*/g, '-')
+    .replace(/[,\s]+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}
 
 const sizeVariantOptions = [
   { label: 'Small', value: 'small' },
@@ -122,7 +164,7 @@ export const seed = async ({
     },
   })
 
-  payload.logger.info(`— Seeding media...`)
+  payload.logger.info(`— Seeding media and categories...`)
 
   const [imageHatBuffer, imageTshirtBlackBuffer, imageTshirtWhiteBuffer, heroBuffer] =
     await Promise.all([
@@ -140,55 +182,50 @@ export const seed = async ({
       ),
     ])
 
-  const [
-    customer,
-    imageHat,
-    imageTshirtBlack,
-    imageTshirtWhite,
-    imageHero,
-    accessoriesCategory,
-    tshirtsCategory,
-    hatsCategory,
-  ] = await Promise.all([
-    payload.create({
-      collection: 'users',
-      data: {
-        name: 'Customer',
-        email: 'customer@example.com',
-        password: 'password',
-        roles: ['customer'],
-      },
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageHatData,
-      file: imageHatBuffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageTshirtBlackData,
-      file: imageTshirtBlackBuffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageTshirtWhiteData,
-      file: imageTshirtWhiteBuffer,
-    }),
-    payload.create({
-      collection: 'media',
-      data: imageHero1Data,
-      file: heroBuffer,
-    }),
-    ...categories.map((category) =>
+  const [customer, imageHat, imageTshirtBlack, imageTshirtWhite, imageHero, ...categoryDocs] =
+    await Promise.all([
       payload.create({
-        collection: 'categories',
+        collection: 'users',
         data: {
-          title: category,
-          slug: category,
+          name: 'Customer',
+          email: 'customer@example.com',
+          password: 'password',
+          roles: ['customer'],
         },
       }),
-    ),
-  ])
+      payload.create({
+        collection: 'media',
+        data: imageHatData,
+        file: imageHatBuffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: imageTshirtBlackData,
+        file: imageTshirtBlackBuffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: imageTshirtWhiteData,
+        file: imageTshirtWhiteBuffer,
+      }),
+      payload.create({
+        collection: 'media',
+        data: imageHero1Data,
+        file: heroBuffer,
+      }),
+      ...categories.map((category) =>
+        payload.create({
+          collection: 'categories',
+          data: {
+            title: category,
+            slug: slugify(category),
+          },
+        }),
+      ),
+    ])
+
+  const farmersStuffCategory =
+    categoryDocs.find((c: { title: string }) => c.title === 'Farmers Stuff') ?? categoryDocs[0]
 
   payload.logger.info(`— Seeding variant types and options...`)
 
@@ -244,7 +281,7 @@ export const seed = async ({
       galleryImage: imageHat,
       metaImage: imageHat,
       variantTypes: [colorVariantType],
-      categories: [hatsCategory],
+      categories: [farmersStuffCategory],
       relatedProducts: [],
     }),
   })
@@ -260,22 +297,22 @@ export const seed = async ({
       metaImage: imageTshirtBlack,
       contentImage: imageHero,
       variantTypes: [colorVariantType, sizeVariantType],
-      categories: [tshirtsCategory],
+      categories: [farmersStuffCategory],
       relatedProducts: [productHat],
     }),
   })
 
-  let hoodieID: number | string = productTshirt.id
+  let _hoodieID: number | string = productTshirt.id
 
   if (payload.db.defaultIDType === 'text') {
-    hoodieID = `"${hoodieID}"`
+    _hoodieID = `"${_hoodieID}"`
   }
 
   const [
     smallTshirtHoodieVariant,
     mediumTshirtHoodieVariant,
-    largeTshirtHoodieVariant,
-    xlargeTshirtHoodieVariant,
+    _largeTshirtHoodieVariant,
+    _xlargeTshirtHoodieVariant,
   ] = await Promise.all(
     [small, medium, large, xlarge].map((variantOption) =>
       payload.create({
@@ -313,7 +350,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding pages...`)
 
-  const [_, contactPage] = await Promise.all([
+  const [_, _contactPage] = await Promise.all([
     payload.create({
       collection: 'pages',
       depth: 0,
@@ -333,7 +370,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding addresses...`)
 
-  const customerUSAddress = await payload.create({
+  const _customerUSAddress = await payload.create({
     collection: 'addresses',
     depth: 0,
     data: {
@@ -342,7 +379,7 @@ export const seed = async ({
     },
   })
 
-  const customerUKAddress = await payload.create({
+  const _customerUKAddress = await payload.create({
     collection: 'addresses',
     depth: 0,
     data: {
@@ -353,7 +390,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding transactions...`)
 
-  const pendingTransaction = await payload.create({
+  const _pendingTransaction = await payload.create({
     collection: 'transactions',
     data: {
       currency: 'USD',
@@ -383,16 +420,16 @@ export const seed = async ({
     },
   })
 
-  let succeededTransactionID: number | string = succeededTransaction.id
+  let _succeededTransactionID: number | string = succeededTransaction.id
 
   if (payload.db.defaultIDType === 'text') {
-    succeededTransactionID = `"${succeededTransactionID}"`
+    _succeededTransactionID = `"${_succeededTransactionID}"`
   }
 
   payload.logger.info(`— Seeding carts...`)
 
   // This cart is open as it's created now
-  const openCart = await payload.create({
+  const _openCart = await payload.create({
     collection: 'carts',
     data: {
       customer: customer.id,
@@ -410,7 +447,7 @@ export const seed = async ({
   const oldTimestamp = new Date('2023-01-01T00:00:00Z').toISOString()
 
   // Cart is abandoned because it was created long in the past
-  const abandonedCart = await payload.create({
+  const _abandonedCart = await payload.create({
     collection: 'carts',
     data: {
       currency: 'USD',
@@ -447,15 +484,15 @@ export const seed = async ({
     },
   })
 
-  let completedCartID: number | string = completedCart.id
+  let _completedCartID: number | string = completedCart.id
 
   if (payload.db.defaultIDType === 'text') {
-    completedCartID = `"${completedCartID}"`
+    _completedCartID = `"${_completedCartID}"`
   }
 
   payload.logger.info(`— Seeding orders...`)
 
-  const orderInCompleted = await payload.create({
+  const _orderInCompleted = await payload.create({
     collection: 'orders',
     data: {
       amount: 7499,
@@ -479,7 +516,7 @@ export const seed = async ({
     },
   })
 
-  const orderInProcessing = await payload.create({
+  const _orderInProcessing = await payload.create({
     collection: 'orders',
     data: {
       amount: 7499,

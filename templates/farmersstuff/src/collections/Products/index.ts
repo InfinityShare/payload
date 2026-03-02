@@ -31,6 +31,7 @@ import type { Field } from 'payload'
 import { DefaultDocumentIDType, slugField, Where } from 'payload'
 
 import { computePricesHook } from './hooks/computePrices'
+import { assignArticleNumberHook } from './hooks/assignArticleNumber'
 import { getAllProductSpecsGroups, type ProductType } from './specs/registry'
 
 /** Transform plugin price fields: show as "Bruttopreis", always enabled (hide checkbox) */
@@ -100,7 +101,11 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
   ...defaultCollection,
   hooks: {
     ...defaultCollection.hooks,
-    beforeChange: [...(defaultCollection.hooks?.beforeChange ?? []), computePricesHook],
+    beforeChange: [
+      ...(defaultCollection.hooks?.beforeChange ?? []),
+      assignArticleNumberHook,
+      computePricesHook,
+    ],
   },
   admin: {
     ...defaultCollection?.admin,
@@ -145,7 +150,7 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
       required: false,
       admin: {
         description:
-          'Article number / SKU from Lexware or other sources. Used for sync and gallery import.',
+          'Article number / SKU. Left empty, it is auto-assigned from the first product category (prefix 101–126 + sequence). Can be set manually or from Lexware/sync.',
         position: 'sidebar',
       },
     },
@@ -225,12 +230,14 @@ export const ProductsCollection: CollectionOverride = ({ defaultCollection }) =>
                   },
                   filterOptions: ({ data }) => {
                     if (data?.enableVariants && data?.variantTypes?.length) {
-                      const variantTypeIDs = data.variantTypes.map((item: any) => {
-                        if (typeof item === 'object' && item?.id) {
-                          return item.id
-                        }
-                        return item
-                      }) as DefaultDocumentIDType[]
+                      const variantTypeIDs = data.variantTypes.map(
+                        (item: DefaultDocumentIDType | { id: DefaultDocumentIDType }) => {
+                          if (typeof item === 'object' && item?.id) {
+                            return item.id
+                          }
+                          return item
+                        },
+                      ) as DefaultDocumentIDType[]
 
                       if (variantTypeIDs.length === 0)
                         return {

@@ -87,6 +87,7 @@ export interface Config {
     carts: Cart;
     orders: Order;
     transactions: Transaction;
+    'plugin-ai-instructions': PluginAiInstruction;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -122,6 +123,7 @@ export interface Config {
     carts: CartsSelect<false> | CartsSelect<true>;
     orders: OrdersSelect<false> | OrdersSelect<true>;
     transactions: TransactionsSelect<false> | TransactionsSelect<true>;
+    'plugin-ai-instructions': PluginAiInstructionsSelect<false> | PluginAiInstructionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -272,7 +274,7 @@ export interface Product {
   id: string;
   title: string;
   /**
-   * Article number / SKU from Lexware or other sources. Used for sync and gallery import.
+   * Article number / SKU. Left empty, it is auto-assigned from the first product category (prefix 101–126 + sequence). Can be set manually or from Lexware/sync.
    */
   articleNumber?: string | null;
   inventory?: number | null;
@@ -2153,6 +2155,81 @@ export interface FormSubmission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "plugin-ai-instructions".
+ */
+export interface PluginAiInstruction {
+  id: string;
+  /**
+   * Please don't change this unless you're sure of what you're doing
+   */
+  'schema-path'?: string | null;
+  /**
+   * Please don't change this unless you're sure of what you're doing
+   */
+  'field-type'?: ('text' | 'textarea' | 'upload' | 'richText') | null;
+  'relation-to'?: string | null;
+  'model-id'?: ('Oai-text' | 'dall-e' | 'gpt-image-1' | 'tts' | 'Oai-object') | null;
+  /**
+   * Please reload your collection after applying the changes
+   */
+  disabled?: boolean | null;
+  /**
+   * Click 'Compose' to run this custom prompt and generate content
+   */
+  prompt?: string | null;
+  images?:
+    | {
+        /**
+         * Please make sure the image is publicly accessible.
+         */
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  system?: string | null;
+  layout?: string | null;
+  'Oai-text-settings'?: {
+    model?:
+      | ('gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-4.1' | 'gpt-4o' | 'gpt-4-turbo' | 'gpt-4o-mini' | 'gpt-3.5-turbo')
+      | null;
+    maxTokens?: number | null;
+    temperature?: number | null;
+    extractAttachments?: boolean | null;
+  };
+  'dalle-e-settings'?: {
+    version?: ('dall-e-3' | 'dall-e-2') | null;
+    size?: ('256x256' | '512x512' | '1024x1024' | '1792x1024' | '1024x1792') | null;
+    style?: ('vivid' | 'natural') | null;
+    'enable-prompt-optimization'?: boolean | null;
+  };
+  'gpt-image-1-settings'?: {
+    version?: 'gpt-image-1' | null;
+    size?: ('1024x1024' | '1024x1536' | '1536x1024' | 'auto') | null;
+    quality?: ('low' | 'medium' | 'high' | 'auto') | null;
+    output_format?: ('png' | 'jpeg' | 'webp') | null;
+    output_compression?: number | null;
+    background?: ('white' | 'transparent') | null;
+    moderation?: ('auto' | 'low') | null;
+  };
+  'Oai-tts-settings'?: {
+    voice?: ('alloy' | 'echo' | 'fable' | 'onyx' | 'nova' | 'shimmer') | null;
+    model?: ('tts-1' | 'tts-1-hd') | null;
+    response_format?: ('mp3' | 'opus' | 'aac' | 'flac' | 'wav' | 'pcm') | null;
+    speed?: number | null;
+  };
+  'Oai-object-settings'?: {
+    model?:
+      | ('gpt-5' | 'gpt-5-mini' | 'gpt-5-nano' | 'gpt-4.1' | 'gpt-4o' | 'gpt-4-turbo' | 'gpt-4o-mini' | 'gpt-3.5-turbo')
+      | null;
+    maxTokens?: number | null;
+    temperature?: number | null;
+    extractAttachments?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -2234,6 +2311,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'transactions';
         value: string | Transaction;
+      } | null)
+    | ({
+        relationTo: 'plugin-ai-instructions';
+        value: string | PluginAiInstruction;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -3313,6 +3394,71 @@ export interface TransactionsSelect<T extends boolean = true> {
   cart?: T;
   amount?: T;
   currency?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "plugin-ai-instructions_select".
+ */
+export interface PluginAiInstructionsSelect<T extends boolean = true> {
+  'schema-path'?: T;
+  'field-type'?: T;
+  'relation-to'?: T;
+  'model-id'?: T;
+  disabled?: T;
+  prompt?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  system?: T;
+  layout?: T;
+  'Oai-text-settings'?:
+    | T
+    | {
+        model?: T;
+        maxTokens?: T;
+        temperature?: T;
+        extractAttachments?: T;
+      };
+  'dalle-e-settings'?:
+    | T
+    | {
+        version?: T;
+        size?: T;
+        style?: T;
+        'enable-prompt-optimization'?: T;
+      };
+  'gpt-image-1-settings'?:
+    | T
+    | {
+        version?: T;
+        size?: T;
+        quality?: T;
+        output_format?: T;
+        output_compression?: T;
+        background?: T;
+        moderation?: T;
+      };
+  'Oai-tts-settings'?:
+    | T
+    | {
+        voice?: T;
+        model?: T;
+        response_format?: T;
+        speed?: T;
+      };
+  'Oai-object-settings'?:
+    | T
+    | {
+        model?: T;
+        maxTokens?: T;
+        temperature?: T;
+        extractAttachments?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

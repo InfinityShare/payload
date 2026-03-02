@@ -43,8 +43,9 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 86rem;
-  --font-mono: var(--font-geist-mono);
-  --font-sans: var(--font-geist-sans);
+  --font-mono: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 @layer utilities {
@@ -94,7 +95,7 @@
   --card-foreground: 0 0% 100%;
   --popover: 0 0% 14.1%;
   --popover-foreground: 0 0% 100%;
-  --primary: 24 100% 50%;
+  --primary: 20 83% 49%;
   --primary-foreground: 0 0% 0%;
   --secondary: 0 0% 18%;
   --secondary-foreground: 0 0% 100%;
@@ -106,8 +107,8 @@
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 22.7%;
   --input: 0 0% 22.7%;
-  --ring: 24 100% 50%;
-  --chart-1: 24 100% 50%;
+  --ring: 20 83% 49%;
+  --chart-1: 20 83% 49%;
   --chart-2: 0 0% 65%;
   --chart-3: 0 0% 45%;
   --chart-4: 0 0% 35%;
@@ -116,12 +117,12 @@
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   --sidebar: 0 0% 14.1%;
   --sidebar-foreground: 0 0% 100%;
-  --sidebar-primary: 24 100% 50%;
+  --sidebar-primary: 20 83% 49%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 18%;
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 0 0% 22.7%;
-  --sidebar-ring: 24 100% 50%;
+  --sidebar-ring: 20 83% 49%;
   --success: 142 71% 45%;
   --warning: 38 92% 50%;
   --error: 0 72% 51%;
@@ -134,7 +135,7 @@
   --card-foreground: 0 0% 100%;
   --popover: 0 0% 14.1%;
   --popover-foreground: 0 0% 100%;
-  --primary: 24 100% 50%;
+  --primary: 20 83% 49%;
   --primary-foreground: 0 0% 0%;
   --secondary: 0 0% 18%;
   --secondary-foreground: 0 0% 100%;
@@ -146,20 +147,20 @@
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 22.7%;
   --input: 0 0% 22.7%;
-  --ring: 24 100% 50%;
-  --chart-1: 24 100% 50%;
+  --ring: 20 83% 49%;
+  --chart-1: 20 83% 49%;
   --chart-2: 0 0% 65%;
   --chart-3: 0 0% 45%;
   --chart-4: 0 0% 35%;
   --chart-5: 0 0% 25%;
   --sidebar: 0 0% 14.1%;
   --sidebar-foreground: 0 0% 100%;
-  --sidebar-primary: 24 100% 50%;
+  --sidebar-primary: 20 83% 49%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 18%;
   --sidebar-accent-foreground: 0 0% 100%;
   --sidebar-border: 0 0% 22.7%;
-  --sidebar-ring: 24 100% 50%;
+  --sidebar-ring: 20 83% 49%;
   --success: 142 71% 45%;
   --warning: 38 92% 50%;
   --error: 0 72% 51%;
@@ -172,7 +173,7 @@
   --card-foreground: 0 0% 10.2%;
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 10.2%;
-  --primary: 24 100% 50%;
+  --primary: 20 83% 49%;
   --primary-foreground: 0 0% 0%;
   --secondary: 0 0% 96%;
   --secondary-foreground: 0 0% 10.2%;
@@ -184,15 +185,15 @@
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 90%;
   --input: 0 0% 90%;
-  --ring: 24 100% 50%;
+  --ring: 20 83% 49%;
   --sidebar: 0 0% 98%;
   --sidebar-foreground: 0 0% 10.2%;
-  --sidebar-primary: 24 100% 50%;
+  --sidebar-primary: 20 83% 49%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent: 0 0% 96%;
   --sidebar-accent-foreground: 0 0% 10.2%;
   --sidebar-border: 0 0% 90%;
-  --sidebar-ring: 24 100% 50%;
+  --sidebar-ring: 20 83% 49%;
   --success: 142 71% 45%;
   --warning: 38 92% 50%;
   --error: 0 72% 51%;
